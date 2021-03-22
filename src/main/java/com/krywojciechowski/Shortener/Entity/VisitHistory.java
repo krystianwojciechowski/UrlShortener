@@ -10,12 +10,11 @@ import java.util.Date;
 public class VisitHistory {
 
     @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @CreationTimestamp
-    @Column
     @ManyToOne
     private ShortenedUrl shortenedUrl;
+    @CreationTimestamp
     @Column
     private Date visitedAt;
 

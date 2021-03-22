@@ -1,8 +1,10 @@
 package com.krywojciechowski.Shortener.UrlShortener;
 
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.bouncycastle.jcajce.provider.digest.MD5;
 import org.springframework.stereotype.Component;
+import reactor.blockhound.shaded.net.bytebuddy.utility.RandomString;
 
 import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +18,6 @@ public class SimpleUrlShortener extends UrlShortener{
 
     @Override
     public String shorten(String url) {
-        return Base64.getUrlEncoder().encodeToString(url.getBytes(StandardCharsets.UTF_8));
+       return RandomStringUtils.randomAlphabetic(8);
     }
 }

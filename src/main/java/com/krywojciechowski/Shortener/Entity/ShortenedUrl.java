@@ -19,6 +19,8 @@ public class ShortenedUrl {
     @Column
     private Date createdAt;
 
+    public ShortenedUrl(){ }
+
     public ShortenedUrl(String hash, String url, Date createdAt) {
         this.hash = hash;
         this.url = url;
