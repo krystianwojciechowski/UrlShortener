@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 
-public abstract class UrlShortener {
+public interface IUrlShortener {
     public abstract String shorten(String url);
 
 }
