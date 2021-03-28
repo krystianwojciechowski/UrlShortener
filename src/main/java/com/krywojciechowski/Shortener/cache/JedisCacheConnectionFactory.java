@@ -1,17 +1,21 @@
 package com.krywojciechowski.Shortener.cache;
 
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Component
-public class CacheManager implements ICacheManager{
+public class JedisCacheConnectionFactory implements ICacheConnectionFactory {
 
+    @Value("${redis.maxTotal}")
+    private int maxConnections;
     private JedisPoolConfig config;
     private JedisPool connectionPool;
+
 
     private JedisPoolConfig configure(){
         JedisPoolConfig config = new JedisPoolConfig();
@@ -21,6 +25,8 @@ public class CacheManager implements ICacheManager{
         return config;
     }
 
+
+
     @Override
     public Jedis getConnection() {
         if(this.config == null){
@@ -29,4 +35,10 @@ public class CacheManager implements ICacheManager{
         }
         return this.connectionPool.getResource();
     }
+
+    @Override
+    public int getMaxConnections() {
+        return this.maxConnections;
+    }
+
 }
