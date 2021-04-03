@@ -12,14 +12,14 @@ public class VisitHistory {
     @Column
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
-    private ShortenedUrl shortenedUrl;
+    @Column
+    private String hash;
     @CreationTimestamp
     @Column
     private Date visitedAt;
 
-    public VisitHistory(ShortenedUrl shortenedUrl, Date visitedAt) {
-        this.shortenedUrl = shortenedUrl;
+    public VisitHistory(String hash, Date visitedAt) {
+        this.hash = hash;
         this.visitedAt = visitedAt;
     }
 
@@ -27,12 +27,12 @@ public class VisitHistory {
         return id;
     }
 
-    public ShortenedUrl getShortenedUrl() {
-        return shortenedUrl;
+    public String getHash() {
+        return this.hash;
     }
 
-    public void setShortenedUrl(ShortenedUrl shortenedUrl) {
-        this.shortenedUrl = shortenedUrl;
+    public void setHash(String  hash) {
+        this.hash = hash;
     }
 
     public Date getVisitedAt() {
