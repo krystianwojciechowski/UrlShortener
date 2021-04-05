@@ -1,13 +1,15 @@
 package com.krywojciechowski.Shortener.Entity;
 
+import com.krywojciechowski.Shortener.cache.Cacheable.ICacheable;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "shortened_url")
-public class ShortenedUrl {
+public class ShortenedUrl implements ICacheable, Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
@@ -53,5 +55,15 @@ public class ShortenedUrl {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public String getCacheKey() {
+        return this.hash;
+    }
+
+    @Override
+    public String getCacheValue() {
+        return this.url;
     }
 }
