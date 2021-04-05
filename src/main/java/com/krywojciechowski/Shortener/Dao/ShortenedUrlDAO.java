@@ -1,23 +1,20 @@
 package com.krywojciechowski.Shortener.Dao;
 
 import com.krywojciechowski.Shortener.Entity.ShortenedUrl;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.query.criteria.internal.CriteriaBuilderImpl;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.List;
 
 
 @Component
-public class ShortenedUrlDAO implements IShortenedUrlDAO {
+public class ShortenedUrlDAO implements IShortenedUrlDao {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -39,6 +36,21 @@ public class ShortenedUrlDAO implements IShortenedUrlDAO {
         query.select(root);
         Query qr = this.entityManager.unwrap(Session.class).createQuery(query);
         return (ShortenedUrl) qr.getSingleResult();
+    }
+
+    @Override
+    public ShortenedUrl find(String hash){
+        CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<ShortenedUrl> query = criteriaBuilder.createQuery(ShortenedUrl.class);
+        Root<ShortenedUrl> root = query.from(ShortenedUrl.class);
+        query.where(criteriaBuilder.equal(root.get("hash"), hash));
+        query.select(root);
+        Query qr = this.entityManager.unwrap(Session.class).createQuery(query);
+         try {
+           return (ShortenedUrl) qr.getSingleResult();
+         } catch (NoResultException exception){
+             return null;
+         }
     }
 
     @Override

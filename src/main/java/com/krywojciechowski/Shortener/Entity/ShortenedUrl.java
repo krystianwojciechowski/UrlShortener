@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 
 @Entity
 @Table(name = "shortened_url")
@@ -57,6 +58,13 @@ public class ShortenedUrl implements ICacheable, Serializable {
         this.createdAt = createdAt;
     }
 
+    //returns data that can be seen by user, used to return from controller
+    public HashMap<String,String> getSafeData(){
+        HashMap<String,String> data = new HashMap<>();
+        data.put("url", this.url);
+        data.put("shortenedUrl", this.hash);
+        return data;
+    }
     @Override
     public String getCacheKey() {
         return this.hash;

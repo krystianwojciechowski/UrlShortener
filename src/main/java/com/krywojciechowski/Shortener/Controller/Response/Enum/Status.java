@@ -7,7 +7,8 @@ public enum Status {
     BAD_REQUEST(400),
     CONFLICT(409),
     INTERNAL_SERVER_ERROR(500),
-    IM_A_TEAPOT(418);
+    IM_A_TEAPOT(418),
+    TEMPORARY_REDIRECT(307);
 
     private final int statusCode;
 
